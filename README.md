@@ -6,8 +6,6 @@
 - Engagement management baseline (Hungarian assignment using hand-crafted costs)
 - AutoML/NAS hooks (scaffold only)
 
-This repo is intentionally modular: you can "vibe code" the sim, but the ML/estimation/planning pieces can be owned and iterated.
-
 ## Quickstart
 
 ```bash
