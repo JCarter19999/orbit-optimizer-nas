@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: engagement-autonomy
+Version: 0.2.0
+Summary: 2D orbital-plane engagement simulation with EKF tracking, Hungarian association, and baseline engagement assignment (NAS hooks scaffolded).
+Requires-Python: >=3.10
+Requires-Dist: numpy>=1.24
+Requires-Dist: scipy>=1.10
+Requires-Dist: pyyaml>=6.0
+Provides-Extra: dev
+Requires-Dist: ruff>=0.4; extra == "dev"
+Requires-Dist: pytest>=8.0; extra == "dev"

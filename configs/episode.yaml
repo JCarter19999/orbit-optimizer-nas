@@ -1,0 +1,47 @@
+run:
+  seed: 123
+  out_dir: runs
+
+sim:
+  mu: 398600.4418          # km^3/s^2 (Earth)
+  dt: 1.0                  # seconds
+  steps: 600               # 10 minutes
+  decision_period: 10      # seconds between engagement decisions
+  intercept_radius_km: 0.25
+  max_burns_per_agent: 50
+  dv_budget_kms: 0.20      # km/s total per interceptor
+  burn_dv_kms: 0.005       # km/s per burn impulse (magnitude)
+  burn_cooldown_s: 5.0
+
+scenario:
+  n_agents: 4
+  n_targets: 6
+  ref_orbit_radius_km: 7000.0
+  agent_pos_sigma_km: 0.5
+  agent_vel_sigma_kms: 0.0005
+  target_pos_sigma_km: 2.0
+  target_vel_sigma_kms: 0.0015
+
+sensor:
+  # Noisy range/bearing to origin (radar-like). Keep simple for now.
+  sigma_range_km: 0.05
+  sigma_bearing_rad: 0.002
+
+tracking:
+  enabled: true
+  q_pos: 1.0e-6            # process noise scale for position
+  q_vel: 1.0e-8            # process noise scale for velocity
+  r_range: 0.05            # measurement noise std (km)
+  r_bearing: 0.002         # measurement noise std (rad)
+
+association:
+  enabled: false           # set true once you add multi-detection association
+  gate_mahalanobis2: 9.21  # ~chi2(2) 0.99
+
+planner:
+  type: hungarian_baseline
+  weights:
+    w_time: 1.0
+    w_dv: 5.0
+    w_range: 0.2
+  max_pairs_per_agent: 6

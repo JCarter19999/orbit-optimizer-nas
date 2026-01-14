@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "engagement-autonomy"
+version = "0.2.0"
+description = "2D orbital-plane engagement simulation with EKF tracking, Hungarian association, and baseline engagement assignment (NAS hooks scaffolded)."
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "ruff>=0.4",
+  "pytest>=8.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
