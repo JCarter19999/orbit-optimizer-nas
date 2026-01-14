@@ -25,18 +25,21 @@ def main() -> None:
     ok["success"] = ok["success_all_targets_neutralized"].astype(int)
     ok["steps"] = ok["steps"].astype(float)
 
-    # Success rate
     success_rate = ok["success"].mean()
+    fail_rate = 1.0 - success_rate
 
     fig = plt.figure()
     ax = plt.gca()
-    ax.set_title("Monte Carlo success rate")
+    ax.set_title("Monte Carlo success / failure rate")
     ax.set_ylabel("rate")
     ax.set_ylim(0, 1)
-    ax.bar(["success"], [success_rate])
+    ax.bar(["success", "failure"], [success_rate, fail_rate])
+    ax.text(0, success_rate + 0.02, f"{success_rate:.3f}", ha="center")
+    ax.text(1, fail_rate + 0.02, f"{fail_rate:.3f}", ha="center")
     fig.tight_layout()
     fig.savefig(out_dir / "plot_mc_success_rate.png", dpi=200)
     plt.close(fig)
+
 
     # Steps histogram
     fig = plt.figure()

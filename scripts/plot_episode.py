@@ -3,13 +3,16 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import matplotlib.pyplot as plt
 
 
+# --- IO helpers ---
+
+
 def read_jsonl(path: Path) -> List[Dict[str, Any]]:
-    rows = []
+    rows: List[Dict[str, Any]] = []
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
@@ -21,25 +24,44 @@ def read_jsonl(path: Path) -> List[Dict[str, Any]]:
     return rows
 
 
-def extract_series(rows: List[Dict[str, Any]]) -> Tuple[List[float], List[Any], List[Any], List[Any]]:
-    t = [float(r["t"]) for r in rows]
-    agents = [r["agents"] for r in rows]
-    targets = [r["targets"] for r in rows]
-    matches = [r.get("matches", []) for r in rows]
-    return t, agents, targets, matches
+def find_first_key(rows: List[Dict[str, Any]], candidates: List[str]) -> Optional[str]:
+    """Return the first candidate key that appears in the first record."""
+    if not rows:
+        return None
+    keys = set(rows[0].keys())
+    for k in candidates:
+        if k in keys:
+            return k
+    return None
 
 
-def plot_battlespace(rows: List[Dict[str, Any]], out_png: Path, every: int = 10) -> None:
+def require_key(rows: List[Dict[str, Any]], key: str) -> None:
+    if key not in rows[0]:
+        raise RuntimeError(
+            f"Expected key '{key}' not found in episode records. "
+            f"Available keys in first record: {sorted(list(rows[0].keys()))}"
+        )
+
+
+# --- plotting helpers ---
+
+
+def plot_battlespace(
+    rows: List[Dict[str, Any]],
+    out_png: Path,
+    agent_key: str,
+    target_key: str,
+    matches_key: Optional[str],
+    every: int = 10,
+) -> None:
     """
-    Plots agent and target trajectories in XY. Marks final positions and intercepts.
-    Draws assignment lines at decision steps when matches exist.
+    Plots agent and target trajectories in XY.
+    Draws assignment lines at steps where matches exist (if matches_key provided and present).
     """
-    t, agents, targets, matches = extract_series(rows)
 
-    n_agents = len(agents[0])
-    n_targets = len(targets[0])
+    n_agents = len(rows[0][agent_key])
+    n_targets = len(rows[0][target_key])
 
-    # trajectories
     fig = plt.figure()
     ax = plt.gca()
     ax.set_title("Battlespace trajectories (XY)")
@@ -47,31 +69,31 @@ def plot_battlespace(rows: List[Dict[str, Any]], out_png: Path, every: int = 10)
     ax.set_ylabel("y (km)")
     ax.set_aspect("equal", adjustable="datalim")
 
-    # plot agent trajs
+    # Agents
     for i in range(n_agents):
-        xs = [agents[k][i]["x"] for k in range(0, len(rows), every)]
-        ys = [agents[k][i]["y"] for k in range(0, len(rows), every)]
+        xs = [rows[k][agent_key][i]["x"] for k in range(0, len(rows), every)]
+        ys = [rows[k][agent_key][i]["y"] for k in range(0, len(rows), every)]
         ax.plot(xs, ys, label=f"agent {i}")
 
-    # plot target trajs, with active/inactive coloring at final time
+    # Targets
     for j in range(n_targets):
-        xs = [targets[k][j]["x"] for k in range(0, len(rows), every)]
-        ys = [targets[k][j]["y"] for k in range(0, len(rows), every)]
+        xs = [rows[k][target_key][j]["x"] for k in range(0, len(rows), every)]
+        ys = [rows[k][target_key][j]["y"] for k in range(0, len(rows), every)]
         ax.plot(xs, ys, linestyle="--", label=f"target {j}")
 
-        final_active = bool(targets[-1][j].get("active", True))
+        final_active = bool(rows[-1][target_key][j].get("active", True))
         ax.scatter(xs[-1], ys[-1], marker="x" if final_active else "o")
 
-    # draw assignment lines at steps where matches exist
-    # (these are engagement assignments, not tracking association)
-    for k in range(0, len(rows), every):
-        ms = matches[k]
-        if not ms:
-            continue
-        for ai, tj in ms:
-            a = agents[k][ai]
-            g = targets[k][tj]
-            ax.plot([a["x"], g["x"]], [a["y"], g["y"]], linewidth=0.8, alpha=0.5)
+    # Matches (optional)
+    if matches_key and matches_key in rows[0]:
+        for k in range(0, len(rows), every):
+            ms = rows[k].get(matches_key, [])
+            if not ms:
+                continue
+            for ai, tj in ms:
+                a = rows[k][agent_key][ai]
+                g = rows[k][target_key][tj]
+                ax.plot([a["x"], g["x"]], [a["y"], g["y"]], linewidth=0.8, alpha=0.5)
 
     ax.legend(loc="best", fontsize=8)
     fig.tight_layout()
@@ -80,8 +102,20 @@ def plot_battlespace(rows: List[Dict[str, Any]], out_png: Path, every: int = 10)
 
 
 def plot_targets_active(rows: List[Dict[str, Any]], out_png: Path) -> None:
-    t = [float(r["t"]) for r in rows]
-    n_active = [int(r.get("n_targets_active", -1)) for r in rows]
+    # If your sim already logs n_targets_active, use it. Otherwise compute from targets list.
+    if "n_targets_active" in rows[0]:
+        t = [float(r.get("t", r.get("time", i))) for i, r in enumerate(rows)]
+        n_active = [int(r.get("n_targets_active", -1)) for r in rows]
+    else:
+        # try to infer target key
+        target_key = find_first_key(rows, ["targets", "truth_targets", "gt_targets", "objects"])
+        if target_key is None:
+            raise RuntimeError(
+                "Cannot plot active targets: no 'n_targets_active' field and no target list key found. "
+                f"Available keys: {sorted(list(rows[0].keys()))}"
+            )
+        t = [float(r.get("t", r.get("time", i))) for i, r in enumerate(rows)]
+        n_active = [sum(1 for g in r[target_key] if bool(g.get("active", True))) for r in rows]
 
     fig = plt.figure()
     ax = plt.gca()
@@ -94,9 +128,9 @@ def plot_targets_active(rows: List[Dict[str, Any]], out_png: Path) -> None:
     plt.close(fig)
 
 
-def plot_agent_dv(rows: List[Dict[str, Any]], out_png: Path) -> None:
-    t = [float(r["t"]) for r in rows]
-    n_agents = len(rows[0]["agents"])
+def plot_agent_dv(rows: List[Dict[str, Any]], out_png: Path, agent_key: str) -> None:
+    t = [float(r.get("t", r.get("time", i))) for i, r in enumerate(rows)]
+    n_agents = len(rows[0][agent_key])
 
     fig = plt.figure()
     ax = plt.gca()
@@ -105,7 +139,7 @@ def plot_agent_dv(rows: List[Dict[str, Any]], out_png: Path) -> None:
     ax.set_ylabel("Δv remaining (km/s)")
 
     for i in range(n_agents):
-        dv = [float(r["agents"][i].get("dv_remaining", 0.0)) for r in rows]
+        dv = [float(r[agent_key][i].get("dv_remaining", 0.0)) for r in rows]
         ax.plot(t, dv, label=f"agent {i}")
 
     ax.legend(loc="best", fontsize=8)
@@ -123,12 +157,37 @@ def main() -> None:
     ep_path = Path(args.episode).resolve()
     rows = read_jsonl(ep_path)
 
+    # Auto-detect keys
+    agent_key = find_first_key(rows, ["agents", "interceptors", "vehicles"])
+    target_key = find_first_key(rows, ["targets", "truth_targets", "gt_targets", "objects"])
+    matches_key = find_first_key(rows, ["matches", "assignments", "engagement_matches"])
+
+    if agent_key is None:
+        raise RuntimeError(
+            "Could not find agent list key. "
+            f"Available keys in first record: {sorted(list(rows[0].keys()))}"
+        )
+    if target_key is None:
+        raise RuntimeError(
+            "Could not find target list key. "
+            f"Available keys in first record: {sorted(list(rows[0].keys()))}\n"
+            "Fix: either log 'targets' in episode.jsonl or add your key name to candidates in plot_episode.py."
+        )
+
     out_dir = ep_path.parent
-    plot_battlespace(rows, out_dir / "plot_battlespace.png", every=max(1, args.every))
+    plot_battlespace(
+        rows,
+        out_dir / "plot_battlespace.png",
+        agent_key=agent_key,
+        target_key=target_key,
+        matches_key=matches_key,
+        every=max(1, args.every),
+    )
     plot_targets_active(rows, out_dir / "plot_targets_active.png")
-    plot_agent_dv(rows, out_dir / "plot_agent_dv.png")
+    plot_agent_dv(rows, out_dir / "plot_agent_dv.png", agent_key=agent_key)
 
     print(f"Wrote plots to: {out_dir}")
+    print(f"Using keys: agents='{agent_key}', targets='{target_key}', matches='{matches_key}'")
 
 
 if __name__ == "__main__":
