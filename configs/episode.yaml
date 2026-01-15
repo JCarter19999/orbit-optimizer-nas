@@ -14,7 +14,7 @@ sim:
   burn_cooldown_s: 5.0
 
 scenario:
-  n_agents: 4
+  n_agents: 6
   n_targets: 6
   ref_orbit_radius_km: 7000.0
   agent_pos_sigma_km: 0.5
