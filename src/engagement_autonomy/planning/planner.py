@@ -1,12 +1,14 @@
 from __future__ import annotations
 from dataclasses import dataclass
+
 from .hungarian import solve_assignment
-from .cost_baseline import BaselineWeights, build_cost_matrix_from_tracks
+from .cost_param import CostWeights, build_cost_matrix_from_tracks
 from ..sim.entities import Interceptor
+
 
 @dataclass
 class HungarianBaselinePlanner:
-    weights: BaselineWeights
+    weights: CostWeights
     max_pairs_per_agent: int
 
     def plan(self, agents: list[Interceptor], track_states, track_active) -> list[tuple[int, int]]:

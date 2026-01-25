@@ -1,0 +1,241 @@
+trial,seed,status,episode_jsonl,steps,n_targets_active_final,success_all_targets_neutralized,stderr
+0,300123,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+1,300124,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+2,300125,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+3,300126,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+4,300127,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+5,300128,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+6,300129,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+7,300130,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+8,300131,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+9,300132,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+10,300133,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+11,300134,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+12,300135,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+13,300136,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+14,300137,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+15,300138,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+16,300139,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+17,300140,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+18,300141,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+19,300142,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+20,300143,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+21,300144,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+22,300145,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+23,300146,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+24,300147,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+25,300148,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+26,300149,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+27,300150,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+28,300151,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"
+29,300152,error,,,,,"Traceback (most recent call last):
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 140, in <module>
+    main()
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\scripts\run_episode.py"", line 24, in main
+    cfg = parse_config(load_yaml(args.config))
+  File ""C:\Users\josep\Desktop\Personal ML Projects\engagement-autonomy\src\engagement_autonomy\config.py"", line 124, in parse_config
+    max_pairs_per_agent=int(pld[""max_pairs_per_agent""]),
+KeyError: 'max_pairs_per_agent'"

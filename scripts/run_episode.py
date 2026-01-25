@@ -14,7 +14,7 @@ from engagement_autonomy.sim.sensor import RangeBearingSensor
 
 from engagement_autonomy.tracking.track_manager import TrackManager
 from engagement_autonomy.planning.planner import HungarianBaselinePlanner
-from engagement_autonomy.planning.cost_baseline import BaselineWeights
+from engagement_autonomy.planning.cost_param import CostWeights
 
 def main() -> None:
     ap = argparse.ArgumentParser()
@@ -66,7 +66,7 @@ def main() -> None:
         track_manager.init_from_truth(truth0, P0=P0)
 
     planner = HungarianBaselinePlanner(
-        weights=BaselineWeights(**cfg.planner.weights),
+        weights=CostWeights(**cfg.planner.weights),
         max_pairs_per_agent=cfg.planner.max_pairs_per_agent,
     )
 
@@ -99,7 +99,10 @@ def main() -> None:
 
         # Step physics
         world.step(scenario.agents, scenario.targets)
-
+        if track_manager is not None:
+            # phase-1: 1 track per target, same ordering
+            for j in range(min(len(track_manager.tracks), len(scenario.targets))):
+                track_manager.tracks[j].active = bool(scenario.targets[j].active)
         # Log
         rec = {
             "t": t,

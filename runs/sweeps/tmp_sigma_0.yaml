@@ -1,0 +1,47 @@
+run:
+  seed: 123
+  out_dir: runs
+sim:
+  mu: 398600.4418
+  dt: 1.0
+  steps: 600
+  decision_period: 10
+  intercept_radius_km: 0.25
+  max_burns_per_agent: 50
+  dv_budget_kms: 0.2
+  burn_dv_kms: 0.005
+  burn_cooldown_s: 5.0
+scenario:
+  n_agents: 6
+  n_targets: 6
+  ref_orbit_radius_km: 7000.0
+  agent_pos_sigma_km: 0.5
+  agent_vel_sigma_kms: 0.0005
+  target_pos_sigma_km: 2.0
+  target_vel_sigma_kms: 0.0015
+sensor:
+  sigma_range_km: 0.05
+  sigma_bearing_rad: 0.002
+  sigma_xy_km: 0.0
+tracking:
+  enabled: false
+  q_pos: 1.0e-06
+  q_vel: 1.0e-08
+  r_range: 0.05
+  r_bearing: 0.002
+association:
+  enabled: false
+  gate_mahalanobis2: 9.21
+planner:
+  type: hungarian_baseline
+  weights:
+    w_tgo: 1.0
+    w_dv: 5.0
+    w_range: 0.2
+    ax_pairs_per_agent: 6
+  cost:
+    w_range: 1.0
+    w_rel_vel: 0.5
+    w_tgo: 0.2
+    w_budget: 200.0
+    eps_speed: 0.01

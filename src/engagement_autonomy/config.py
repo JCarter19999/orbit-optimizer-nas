@@ -121,7 +121,7 @@ def parse_config(d: Dict[str, Any]) -> Config:
     planner = PlannerConfig(
         type=str(pld["type"]),
         weights=dict(pld["weights"]),
-        max_pairs_per_agent=int(pld["max_pairs_per_agent"]),
+        max_pairs_per_agent=int(pld.get("max_pairs_per_agent", 6)),
     )
 
     return Config(

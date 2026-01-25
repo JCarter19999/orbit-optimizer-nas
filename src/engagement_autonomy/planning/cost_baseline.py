@@ -5,7 +5,7 @@ from ..sim.entities import Interceptor
 
 @dataclass(frozen=True)
 class BaselineWeights:
-    w_time: float
+    w_go: float
     w_dv: float
     w_range: float
 
@@ -50,6 +50,6 @@ def build_cost_matrix_from_tracks(
             ttc = estimate_time_to_close(ag, x, y, vx, vy)
             dvn = estimate_dv_need(ag, vx, vy)
             rng = float(np.hypot(x - ag.x, y - ag.y))
-            C[i, j] = weights.w_time * ttc + weights.w_dv * dvn + weights.w_range * rng
+            C[i, j] = weights.w_tgo * ttc + weights.w_dv * dvn + weights.w_range * rng
 
     return C, infeasible

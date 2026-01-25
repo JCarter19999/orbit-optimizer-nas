@@ -28,7 +28,7 @@ sensor:
   sigma_bearing_rad: 0.002
 
 tracking:
-  enabled: true
+  enabled: false
   q_pos: 1.0e-6            # process noise scale for position
   q_vel: 1.0e-8            # process noise scale for velocity
   r_range: 0.05            # measurement noise std (km)
@@ -41,7 +41,13 @@ association:
 planner:
   type: hungarian_baseline
   weights:
-    w_time: 1.0
+    w_tgo: 1.0
     w_dv: 5.0
     w_range: 0.2
-  max_pairs_per_agent: 6
+    ax_pairs_per_agent: 6
+  cost:
+    w_range: 1.0
+    w_rel_vel: 0.5
+    w_tgo: 0.2
+    w_budget: 200.0
+    eps_speed: 0.01
