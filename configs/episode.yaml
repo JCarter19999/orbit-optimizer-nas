@@ -1,53 +1,53 @@
 run:
-  seed: 123
+  seed: 7
   out_dir: runs
 
 sim:
-  mu: 398600.4418          # km^3/s^2 (Earth)
-  dt: 1.0                  # seconds
-  steps: 600               # 10 minutes
-  decision_period: 10      # seconds between engagement decisions
-  intercept_radius_km: 0.25
-  max_burns_per_agent: 50
-  dv_budget_kms: 0.20      # km/s total per interceptor
-  burn_dv_kms: 0.005       # km/s per burn impulse (magnitude)
-  burn_cooldown_s: 5.0
+  mu: 0.0              # unused (kept for compatibility)
+  dt: 1.0              # seconds
+  steps: 400
+  decision_period: 5
+  intercept_radius_km: 0.05   # unused by world; intercept handled in run_episode try_intercepts
+  max_burns_per_agent: 500    # allow lots of steering updates
+  dv_budget_kms: 20.0          # "fuel" budget: total delta-v magnitude available
+  burn_dv_kms: 0.12           # max delta-v we can spend per steering update
+  burn_cooldown_s: 0.0
 
 scenario:
   n_agents: 6
   n_targets: 6
-  ref_orbit_radius_km: 7000.0
-  agent_pos_sigma_km: 0.5
-  agent_vel_sigma_kms: 0.0005
-  target_pos_sigma_km: 2.0
-  target_vel_sigma_kms: 0.0015
+  ref_orbit_radius_km: 80.0      # interpreted as battlespace half-width (km)
+  agent_pos_sigma_km: 1.0
+  agent_vel_sigma_kms: 0.01
+  target_pos_sigma_km: 1.0
+  target_vel_sigma_kms: 0.01
 
 sensor:
-  # Noisy range/bearing to origin (radar-like). Keep simple for now.
-  sigma_range_km: 0.05
-  sigma_bearing_rad: 0.002
+  sigma_range_km: 0.0
+  sigma_bearing_rad: 0.0
 
 tracking:
   enabled: false
-  q_pos: 1.0e-6            # process noise scale for position
-  q_vel: 1.0e-8            # process noise scale for velocity
-  r_range: 0.05            # measurement noise std (km)
-  r_bearing: 0.002         # measurement noise std (rad)
+  q_pos: 0.01
+  q_vel: 0.01
+  r_range: 0.5
+  r_bearing: 0.01
 
 association:
-  enabled: false           # set true once you add multi-detection association
-  gate_mahalanobis2: 9.21  # ~chi2(2) 0.99
+  enabled: false
+  gate_mahalanobis2: 9.21
 
 planner:
   type: hungarian_baseline
+  max_pairs_per_agent: 6
   weights:
-    w_tgo: 1.0
-    w_dv: 5.0
-    w_range: 0.2
-    ax_pairs_per_agent: 6
-  cost:
     w_range: 1.0
-    w_rel_vel: 0.5
-    w_tgo: 0.2
+    w_rel_vel: 0.2
+    w_tgo: 2.0
     w_budget: 200.0
-    eps_speed: 0.01
+    eps_speed: 0.001
+
+engagement:
+  commit_radius_km: 50.0
+  kill_radius_km: 1.0
+  v_close_min_kms: 0.0

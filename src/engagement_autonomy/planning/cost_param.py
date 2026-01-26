@@ -60,7 +60,9 @@ def build_cost_matrix_from_tracks(
 
             r = _norm(rel_p)
             rel_speed = _norm(rel_v)
-            ag_speed = max(weights.eps_speed, _norm(np.array([ag.vx, ag.vy], dtype=float)))
+            cap = float(getattr(ag, 'max_speed_kms', 0.0))
+            cur_speed = _norm(np.array([ag.vx, ag.vy], dtype=float))
+            ag_speed = max(weights.eps_speed, cap, cur_speed)
 
             # time-to-go proxy (not perfect physics; stable + tunable)
             tgo = r / ag_speed

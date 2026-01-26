@@ -4,92 +4,92 @@ import numpy as np
 from dataclasses import dataclass
 from .entities import Interceptor, Target
 
-
 @dataclass(frozen=True)
 class Scenario:
     agents: list[Interceptor]
     targets: list[Target]
 
-
-def state_from_orbital_params(mu: float, r: float, theta: float) -> tuple[float, float, float, float]:
-    """Circular orbit state at radius r and angle theta (2D, prograde)."""
-    x = r * np.cos(theta)
-    y = r * np.sin(theta)
-
-    v = np.sqrt(mu / r)
-    # Tangential unit vector is [-sinθ, cosθ]
-    vx = -v * np.sin(theta)
-    vy =  v * np.cos(theta)
-    return float(x), float(y), float(vx), float(vy)
-
-
 def make_scenario(
     rng: np.random.Generator,
-    mu: float,
+    mu: float,  # unused in ground-air mode (kept for config compatibility)
     n_agents: int,
     n_targets: int,
-    r0: float,
+    r0: float,  # interpreted as horizontal half-width of the battlespace (km)
     agent_pos_sigma: float,
     agent_vel_sigma: float,
     target_pos_sigma: float,
     target_vel_sigma: float,
     dv_budget: float,
     max_burns: int,
-    target_radius_sigma_km: float = 50.0,
-    target_radial_vel_sigma_kms: float = 0.0008,
+    target_altitude_km: float = 10.0,
+    target_speed_kms: float = 0.18,
+    interceptor_max_speed_kms: float = 0.60,
+    spawn_mode: str = "opposite_pairs",
 ) -> Scenario:
     """
-    Agents: clustered around one neighborhood (baseline).
-    Targets: diversified by orbital phase + slightly different radius + small radial velocity (mild eccentricity),
-             so Hungarian assignment is non-trivial.
+    Ground-air (planar) demo scenario.
+
+    - Targets ("air") start at y ~ target_altitude_km with random x across [-r0, r0].
+      They travel roughly left-to-right with some vertical component.
+
+    - Interceptors ("ground") start near y ~ 0. For 'opposite_pairs', interceptor j spawns
+      across the origin from target j (x = -x_target) so assignments are non-trivial but intuitive.
+
+    Units:
+      position: km
+      velocity: km/s
+      dt (world): seconds
     """
-    # --- Agents: start near a common neighborhood ---
-    theta_agents = float(rng.uniform(0.0, 2.0 * np.pi))
-    xa0, ya0, vxa0, vya0 = state_from_orbital_params(mu, r0, theta_agents)
 
-    agents: list[Interceptor] = []
-    for _ in range(n_agents):
-        dx, dy = rng.normal(0.0, agent_pos_sigma, size=2)
-        dvx, dvy = rng.normal(0.0, agent_vel_sigma, size=2)
-        agents.append(
-            Interceptor(
-                x=float(xa0 + dx),
-                y=float(ya0 + dy),
-                vx=float(vxa0 + dvx),
-                vy=float(vya0 + dvy),
-                dv_remaining=float(dv_budget),
-                burns_left=int(max_burns),
-                cooldown_remaining=0.0,
-            )
-        )
-
-    # --- Targets: diversify orbits ---
+    # --- Targets ---
     targets: list[Target] = []
-    thetas = rng.uniform(0.0, 2.0 * np.pi, size=n_targets)
-
-    r_offsets = rng.normal(0.0, target_radius_sigma_km, size=n_targets)
-    rs = np.clip(r0 + r_offsets, r0 - 3.0 * target_radius_sigma_km, r0 + 3.0 * target_radius_sigma_km)
-
+    xs = rng.uniform(-r0, r0, size=n_targets)
     for j in range(n_targets):
-        x, y, vx, vy = state_from_orbital_params(mu, float(rs[j]), float(thetas[j]))
+        x = float(xs[j] + rng.normal(0.0, target_pos_sigma))
+        y = float(target_altitude_km + rng.normal(0.0, target_pos_sigma))
 
-        dx, dy = rng.normal(0.0, target_pos_sigma, size=2)
-        dvx, dvy = rng.normal(0.0, target_vel_sigma, size=2)
+        # Nominal air motion: mostly horizontal, slight vertical
+        vx0 = float(rng.uniform(0.6, 1.0) * target_speed_kms) * (1.0 if rng.random() < 0.5 else -1.0)
+        vy0 = float(rng.uniform(-0.4, 0.4) * target_speed_kms)
 
-        # Small radial velocity -> mild eccentricity -> more divergence over time
-        erx, ery = float(np.cos(thetas[j])), float(np.sin(thetas[j]))
-        v_rad = float(rng.normal(0.0, target_radial_vel_sigma_kms))
-        vx = float(vx + v_rad * erx)
-        vy = float(vy + v_rad * ery)
+        vx = float(vx0 + rng.normal(0.0, target_vel_sigma))
+        vy = float(vy0 + rng.normal(0.0, target_vel_sigma))
 
-        targets.append(
-            Target(
-                x=float(x + dx),
-                y=float(y + dy),
-                vx=float(vx + dvx),
-                vy=float(vy + dvy),
-                active=True,
+        targets.append(Target(x=x, y=y, vx=vx, vy=vy, active=True))
+
+    # --- Agents ---
+    agents: list[Interceptor] = []
+    if spawn_mode == "opposite_pairs" and n_agents == n_targets and n_targets > 0:
+        for j in range(n_agents):
+            tj = targets[j]
+            ax = float(-tj.x + rng.normal(0.0, agent_pos_sigma))
+            ay = float(0.0 + rng.normal(0.0, agent_pos_sigma))
+            avx = float(rng.normal(0.0, agent_vel_sigma))
+            avy = float(rng.normal(0.0, agent_vel_sigma))
+            agents.append(
+                Interceptor(
+                    x=ax, y=ay, vx=avx, vy=avy,
+                    dv_remaining=float(dv_budget),
+                    burns_left=int(max_burns),
+                    cooldown_remaining=0.0,
+                    max_speed_kms=float(interceptor_max_speed_kms),
+                )
             )
-        )
+    else:
+        # generic spawn: cluster around origin
+        for _ in range(n_agents):
+            ax = float(rng.normal(0.0, agent_pos_sigma))
+            ay = float(rng.normal(0.0, agent_pos_sigma))
+            avx = float(rng.normal(0.0, agent_vel_sigma))
+            avy = float(rng.normal(0.0, agent_vel_sigma))
+            agents.append(
+                Interceptor(
+                    x=ax, y=ay, vx=avx, vy=avy,
+                    dv_remaining=float(dv_budget),
+                    burns_left=int(max_burns),
+                    cooldown_remaining=0.0,
+                    max_speed_kms=float(interceptor_max_speed_kms),
+                )
+            )
 
     return Scenario(agents=agents, targets=targets)

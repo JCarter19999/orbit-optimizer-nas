@@ -60,6 +60,12 @@ class PlannerConfig:
     max_pairs_per_agent: int
 
 @dataclass(frozen=True)
+class EngagementConfig:
+    kill_radius_km: float = 50.0
+    v_close_min_kms: float = 0.0
+    commit_radius_km: float = 2000.0
+
+@dataclass(frozen=True)
 class Config:
     run: RunConfig
     sim: SimConfig
@@ -68,6 +74,7 @@ class Config:
     tracking: TrackingConfig
     association: AssociationConfig
     planner: PlannerConfig
+    engagement: EngagementConfig
 
 def parse_config(d: Dict[str, Any]) -> Config:
     run = RunConfig(seed=int(d["run"]["seed"]), out_dir=Path(d["run"]["out_dir"]))
@@ -124,6 +131,13 @@ def parse_config(d: Dict[str, Any]) -> Config:
         max_pairs_per_agent=int(pld.get("max_pairs_per_agent", 6)),
     )
 
+    engd = d.get("engagement", d.get("planner", {}).get("engagement", {}))
+    engagement = EngagementConfig(
+        kill_radius_km=float(engd.get("kill_radius_km", 50.0)),
+        v_close_min_kms=float(engd.get("v_close_min_kms", 0.0)),
+        commit_radius_km=float(engd.get("commit_radius_km", 2000.0)),
+    )
+
     return Config(
         run=run,
         sim=sim,
@@ -132,4 +146,5 @@ def parse_config(d: Dict[str, Any]) -> Config:
         tracking=tracking,
         association=association,
         planner=planner,
+        engagement=engagement,
     )

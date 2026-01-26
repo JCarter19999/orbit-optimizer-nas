@@ -80,11 +80,11 @@ def main() -> None:
 
     # write headers
     with open(trials_csv, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["sigma_xy_km", "trial", "seed", "success", "dv_used", "episode_jsonl"])
+        w = csv.DictWriter(f, fieldnames=["sigma_range_km", "trial", "seed", "success", "dv_used", "episode_jsonl"])
         w.writeheader()
 
     with open(summary_csv, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=["sigma_xy_km", "trials_ok", "success_rate", "dv_used_mean"])
+        w = csv.DictWriter(f, fieldnames=["sigma_range_km", "trials_ok", "success_rate", "dv_used_mean"])
         w.writeheader()
 
     # sweep loop
@@ -92,7 +92,7 @@ def main() -> None:
         # create a temp config for this sigma
         cfg = dict(base_cfg)
         cfg.setdefault("sensor", {})
-        cfg["sensor"]["sigma_xy_km"] = float(sigma)
+        cfg["sensor"]["sigma_range_km"] = float(sigma)
 
         tmp_cfg = out_dir / f"tmp_sigma_{sigma:g}.yaml"
         save_yaml(cfg, tmp_cfg)
@@ -110,7 +110,7 @@ def main() -> None:
             "--out-dir",
             "runs",
         ]
-        print(f"[SWEEP] sigma_xy_km={sigma:g} -> {' '.join(cmd)}")
+        print(f"[SWEEP] sigma_range_km={sigma:g} -> {' '.join(cmd)}")
         proc = subprocess.run(cmd, capture_output=True, text=True)
         if proc.returncode != 0:
             print(proc.stderr)
@@ -149,10 +149,10 @@ def main() -> None:
             dv_useds.append(dv)
 
             with open(trials_csv, "a", newline="", encoding="utf-8") as f:
-                w = csv.DictWriter(f, fieldnames=["sigma_xy_km", "trial", "seed", "success", "dv_used", "episode_jsonl"])
+                w = csv.DictWriter(f, fieldnames=["sigma_range_km", "trial", "seed", "success", "dv_used", "episode_jsonl"])
                 w.writerow(
                     {
-                        "sigma_xy_km": float(sigma),
+                        "sigma_range_km": float(sigma),
                         "trial": int(row["trial"]),
                         "seed": int(row["seed"]),
                         "success": int(succ),
@@ -166,10 +166,10 @@ def main() -> None:
         dv_mean = float(sum(dv_useds) / trials_ok) if trials_ok > 0 else 0.0
 
         with open(summary_csv, "a", newline="", encoding="utf-8") as f:
-            w = csv.DictWriter(f, fieldnames=["sigma_xy_km", "trials_ok", "success_rate", "dv_used_mean"])
+            w = csv.DictWriter(f, fieldnames=["sigma_range_km", "trials_ok", "success_rate", "dv_used_mean"])
             w.writerow(
                 {
-                    "sigma_xy_km": float(sigma),
+                    "sigma_range_km": float(sigma),
                     "trials_ok": int(trials_ok),
                     "success_rate": float(success_rate),
                     "dv_used_mean": float(dv_mean),

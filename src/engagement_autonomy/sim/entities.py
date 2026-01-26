@@ -18,9 +18,13 @@ class Body2D:
 
 @dataclass
 class Interceptor(Body2D):
+    # "Fuel" budget (km/s equivalent) we decrement based on velocity changes we command.
     dv_remaining: float
+    # Max number of major retarget / steering updates allowed (kept for legacy compatibility)
     burns_left: int
     cooldown_remaining: float
+    # Kinematic capability for the ground-air (planar) demo
+    max_speed_kms: float = 0.30   # ~300 m/s
 
 @dataclass
 class Target(Body2D):
